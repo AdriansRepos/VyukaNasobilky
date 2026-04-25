@@ -1,36 +1,60 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace VyukaNasobilky
 {
     class GeneratorPrikladu
     {
+        private const int MalaMin = 1;
+        private const int MalaMax = 10;
+
+        private const int VelkaMin = 11;
+        private const int VelkaMax = 20;
+
+        private static readonly Random rnd = new();
+
         // ============================
-        // TABULKOVÁ NÁSOBILKA
+        // MALÁ – TABULKOVÁ
         // ============================
-        public IEnumerable<Vypocty> GenerujNasobilku(int min, int max)
+        public static IEnumerable<Vypocty> GenerujMalouNasobilku()
         {
-            for (int a = min; a <= max; a++)
-            {
-                for (int b = min; b <= max; b++)
-                {
+            for (int a = MalaMin; a <= MalaMax; a++)
+                for (int b = MalaMin; b <= MalaMax; b++)
                     yield return new Vypocty(a, b);
-                }
+        }
+
+        // ============================
+        // MALÁ – NÁHODNÁ
+        // ============================
+        public static IEnumerable<Vypocty> GenerujNahodnouMalou()
+        {
+            while (true)
+            {
+                int a = rnd.Next(MalaMin, MalaMax + 1);
+                int b = rnd.Next(MalaMin, MalaMax + 1);
+                yield return new Vypocty(a, b);
             }
         }
 
         // ============================
-        // NÁHODNÉ PŘÍKLADY
+        // VELKÁ – TABULKOVÁ
         // ============================
-        public Vypocty GenerujNahodnyPriklad(int min, int max)
+        public static IEnumerable<Vypocty> GenerujVelkouNasobilku()
         {
-            Random rnd = new();
-            int a = rnd.Next(min, max + 1);
-            int b = rnd.Next(min, max + 1);
-            return new Vypocty(a, b);
+            for (int a = VelkaMin; a <= VelkaMax; a++)
+                for (int b = VelkaMin; b <= VelkaMax; b++)
+                    yield return new Vypocty(a, b);
+        }
+
+        // ============================
+        // VELKÁ – NÁHODNÁ
+        // ============================
+        public static IEnumerable<Vypocty> GenerujNahodnouVelkou()
+        {
+            while (true)
+            {
+                int a = rnd.Next(VelkaMin, VelkaMax + 1);
+                int b = rnd.Next(VelkaMin, VelkaMax + 1);
+                yield return new Vypocty(a, b);
+            }
         }
     }
 
