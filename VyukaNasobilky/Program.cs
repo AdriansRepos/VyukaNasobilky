@@ -1,12 +1,10 @@
 ﻿using VyukaNasobilky;
 
-var generator = new GeneratorPrikladu();
-
 while (true)
-{    
+{
     Console.WriteLine("=== HLAVNÍ MENU ===");
     Console.WriteLine("1. Malá násobilka (1–10)");
-    Console.WriteLine("2. Velká násobilka (1–20)");
+    Console.WriteLine("2. Velká násobilka (11–20)");
     Console.WriteLine("3. Konec programu");
     Console.Write("Vyber možnost: ");
 
@@ -16,11 +14,11 @@ while (true)
     switch (volba)
     {
         case '1':
-            Podmenu(generator, 1, 10);
+            Podmenu("Malá násobilka", GeneratorPrikladu.GenerujMalouNasobilku, () => GeneratorPrikladu.GenerujNahodnouMalou());
             break;
 
         case '2':
-            Podmenu(generator, 1, 20);
+            Podmenu("Velká násobilka", GeneratorPrikladu.GenerujVelkouNasobilku, () => GeneratorPrikladu.GenerujNahodnouVelkou());
             break;
 
         case '3':
@@ -31,16 +29,17 @@ while (true)
             Console.ReadKey();
             break;
     }
-} 
+}
 
-    // ============================
-    // PODMENU
-    // ============================
-    static void Podmenu(GeneratorPrikladu generator, int min, int max)
+
+// ============================
+// PODMENU
+// ============================
+static void Podmenu(string nazev, Func<IEnumerable<Vypocty>> tabulkove, Func<IEnumerable<Vypocty>> nahodne)
 {
     while (true)
-    {        
-        Console.WriteLine($"=== NÁSOBILKA {min}–{max} ===");
+    {
+        Console.WriteLine($"=== {nazev} ===");
         Console.WriteLine("1. Příklady podle tabulek");
         Console.WriteLine("2. Náhodné příklady");
         Console.WriteLine("0. Návrat do hlavního menu");
@@ -52,11 +51,11 @@ while (true)
         switch (volba)
         {
             case '1':
-                PrikladyTabulkove(generator, min, max);
+                ZpracujPriklady(tabulkove());
                 break;
 
             case '2':
-                PrikladyNahodne(generator, min, max);
+                ZpracujPriklady(nahodne());
                 break;
 
             case '0':
@@ -70,15 +69,16 @@ while (true)
     }
 }
 
+
 // ============================
-// TABULKOVÉ PŘÍKLADY
+// JEDNOTNÉ ZPRACOVÁNÍ PŘÍKLADŮ
 // ============================
-static void PrikladyTabulkove(GeneratorPrikladu generator, int min, int max)
+static void ZpracujPriklady(IEnumerable<Vypocty> priklady)
 {
-    foreach (var priklad in generator.GenerujNasobilku(min, max))
+    foreach (var p in priklady)
     {
-        if (!ZpracujPriklad(priklad.PrvniCislo, priklad.DruheCislo))
-            return; // návrat do hlavního menu
+        if (!ZpracujPriklad(p.PrvniCislo, p.DruheCislo))
+            return;
     }
 
     Console.WriteLine("Hotovo! Stiskni libovolnou klávesu...");
@@ -87,30 +87,14 @@ static void PrikladyTabulkove(GeneratorPrikladu generator, int min, int max)
 
 
 // ============================
-// NÁHODNÉ PŘÍKLADY
-// ============================
-static void PrikladyNahodne(GeneratorPrikladu generator, int min, int max)
-{
-    while (true)
-    {
-        var priklad = generator.GenerujNahodnyPriklad(min, max);
-
-        if (!ZpracujPriklad(priklad.PrvniCislo, priklad.DruheCislo))
-            return; // návrat do hlavního menu
-    }
-}
-
-
-// ============================
 // ZPRACOVÁNÍ JEDNOHO PŘÍKLADU
 // ============================
 static bool ZpracujPriklad(int a, int b)
 {
-    Console.Write($"{a} × {b} = ");  // výsledek se píše na stejný řádek
+    Console.Write($"{a} × {b} = ");
 
     string? vstup = Console.ReadLine()?.Trim();
 
-    // 0 = návrat do hlavního menu
     if (vstup == "0")
         return false;
 
@@ -127,5 +111,3 @@ static bool ZpracujPriklad(int a, int b)
 
     return true;
 }
-
-
