@@ -1,8 +1,9 @@
 ﻿
 namespace VyukaNasobilky
-{
+{   // Třída GeneratorPrikladu obsahuje metody pro generování příkladů násobilky pro malou (1–10) a velkou (11–20) násobilku,
+    // jak podle tabulek, tak náhodně.
     class GeneratorPrikladu
-    {
+    {   // Konstanty pro rozsahy násobilky
         private const int MalaMin = 1;
         private const int MalaMax = 10;
 
@@ -57,5 +58,4 @@ namespace VyukaNasobilky
             }
         }
     }
-
 }

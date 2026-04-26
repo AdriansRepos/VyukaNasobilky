@@ -1,5 +1,8 @@
 ﻿using VyukaNasobilky;
 
+// ============================
+// HLAVNÍ MENU
+// ============================
 while (true)
 {
     Console.WriteLine("=== HLAVNÍ MENU ===");
@@ -8,6 +11,7 @@ while (true)
     Console.WriteLine("3. Konec programu");
     Console.Write("Vyber možnost: ");
 
+    // Čtení volby uživatele z klávesnice
     char volba = Console.ReadKey().KeyChar;
     Console.WriteLine();
 
