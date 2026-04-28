@@ -111,7 +111,7 @@ static bool ZpracujPriklad(int a, int b)
     if (odpoved == a * b)
         Console.WriteLine("Správně!");
     else
-        Console.WriteLine($"Špatně! Správná odpověď je {a * b}");
+        Console.WriteLine($"\aŠpatně! Správná odpověď je {a * b}");
 
     return true;
 }
